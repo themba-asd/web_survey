@@ -1,7 +1,5 @@
-// the indexing of each question from the list of 70 questions(questionaire) is directly linked to every other list index, Do not modify that list
 
-// list of all the questions in a specific order, each question liable to be indexed to it's equivalent catergory(mercy, teaching, prophecy, giving, exhorting, serving or leading)
-const questionaire = [
+const questions = [
     'I like to think of ways to help others who are suffering emotionally, physically and spiritually.',
     'I enjoy spending time in studying the Bible.',
     'I think people should say what they mean and mean what they say about God"s truth even if it may hurt the feelings of the listeners.',
@@ -73,140 +71,53 @@ const questionaire = [
     'When I hear of some practical need that someone has, I am willing to volunteer to help meet it.',
     'I am willing to endure the misunderstanding of others to achieve the end result.'
 ];
-//store all the scores for each question from the list of questions (questionaire), index pos relevant to the index pos of the list(questionaire)
-let questionaireScores = [];
-//index the question that will be currently displayed to, from the list of questions (questionaire)
-let currentQuestion = 0; 
-//
-const box1Div = document.getElementById('box-1');
-const box2Div = document.getElementById('box-2');
-//
-const continueBtn = document.getElementById('continue-btn');
-const beginBtn = document.getElementById('begin-btn');
-//
-const displayElement = document.getElementById('display-question');
-const questionaireDiv = document.getElementById('questionaire');
-//
-const usuallyBtn = document.getElementById('usually-btn');
-const sometimesBtn = document.getElementById('sometimes-btn');
-const seldomBtn = document.getElementById('seldom-btn');
-const rarelyBtn = document.getElementById('rarely-btn');
-//
-//change to next question after user clicks a button 
+
+let questionsScores = [];
+let questionIndex = 0;
+
 function displayNextQuestion(){
-    if (currentQuestion < questionaire.length){
-        displayElement.textContent = questionaire[currentQuestion];
-        currentQuestion ++;
-    }   else    {
-        //show a next btn and on click, it should then show the summary chart
-        console.log(questionaireScores);
-        showResults();
-    }
-}
-// functions to set the score for each question from the button clicked by user, each event listener runs a specific function from below
-function usuallyBtnClick(){
-    questionaireScores.push(5);
-}
-function sometimesBtnClick(){
-    questionaireScores.push(3);
-}
-function seldomBtnClick(){
-    questionaireScores.push(1);
-}
-function rarelyBtnClick(){
-    questionaireScores.push(0);
-}
-// function to reveal the results after completing the questionaire, it is called after the last question by the function (displayNextQuestion)
-function showResults(){
-    questionaireDiv.style.display = 'none';
-//
-    const mercyResultsElement = document.getElementById('mercy-results');
-    const teachingResultsElement = document.getElementById('teaching-results');
-    const prophecyResultsElement = document.getElementById('prophecy-results');
-    const givingResultsElement = document.getElementById('giving-results');
-    const exhortingResultsElement = document.getElementById('exhorting-results');
-    const servingResultsElement = document.getElementById('serving-results');
-    const leadingResultsElement = document.getElementById('leading-results');
-// inserting the results from each category in our html to display to user 
-    mercyResultsElement.textContent = 'Mercy Score | ' + totalScoreForMercy().toFixed(0) + '%';
-    teachingResultsElement.textContent = 'Teaching Score | ' + totalScoreForTeaching().toFixed(0) + '%';
-    prophecyResultsElement.textContent = 'Prophecy Score | ' + totalScoreForProphecy().toFixed(0) + '%';
-    givingResultsElement.textContent = 'Giving Score | ' + totalScoreForGiving().toFixed(0) + '%';
-    exhortingResultsElement.textContent = 'Exhorting Score | ' + totalScoreForExhorting().toFixed(0) + '%';
-    servingResultsElement.textContent = 'Serving Score | ' + totalScoreForServing().toFixed(0) + '%';
-    leadingResultsElement.textContent = 'Leading Score | ' + totalScoreForLeading().toFixed(0) + '%';
-//Unhide the div, so it can now display the results to user
-    const resultDiv = document.getElementById('results');
-    resultDiv.style.display = 'grid';
-}
-//functions to return the total score for each catergory(mercy, teaching, prophecy, giving, exhorting, serving, leading), will index the complimentary scores from the main list of scores
-// the functions will be called from inside the function (showResults)
-function totalScoreForMercy(){
-    let total = 0
-    for (let i = 0; i < (questionaire.length); i += 7) {
-        total = total + questionaireScores[i];
-    }return (total/50) * 100;
-}
-function totalScoreForTeaching(){
-    let total = 0
-    for (let i = 1; i < (questionaire.length); i += 7) {
-        total += questionaireScores[i]
-    }return (total/50) * 100;
-}
-function totalScoreForProphecy(){
-    let total = 0
-    for (let i = 2; i < (questionaire.length); i += 7) {
-        total += questionaireScores[i]
-    }return (total/50) * 100;
-}
-function totalScoreForGiving(){
-    let total = 0
-    for (let i = 3; i < (questionaire.length); i += 7) {
-        total += questionaireScores[i]
-    }return total;
-}
-function totalScoreForExhorting(){
-    let total = 0
-    for (let i = 4; i < (questionaire.length); i += 7) {
-        total += questionaireScores[i]
-    }return (total/50) * 100;
-}
-function totalScoreForServing(){
-    let total = 0
-    for (let i = 5; i < (questionaire.length); i += 7) {
-        total += questionaireScores[i]
-    }return (total/50) * 100;
-}
-function totalScoreForLeading(){
-    let total = 0
-    for (let i = 6; i < (questionaire.length); i += 7) {
-        total += questionaireScores[i]
-    }return (total/50) * 100;
-}
-//adding the event listeners to the buttons
-continueBtn.addEventListener('click', () => {
-    box1Div.style.display = 'none';
-    box2Div.style.display = 'grid';
-});
-//the event will begin the questionaire 
-beginBtn.addEventListener('click', () => {
-    box2Div.style.display = 'none';
-    questionaireDiv.style.display = 'grid';
-});
+    if (questionsScores.length < questions.length){
+        document.querySelector('#question-num').innerHTML = 'Question ' + (questionIndex + 1)
+        document.querySelector('#question').innerHTML = questions[questionIndex]
+        questionIndex++;
+    } else {
+        displayResults()
+    };
+};
 
+function getScores(){
+    const btns = document.querySelectorAll('button')
+    for (const btn in btns){
+        let button = btns[btn]
+        button.addEventListener('click', () => {
+            if (questionsScores.length < questions.length){
+                let score = parseInt(btns[btn].getAttribute('score'))
+                questionsScores.push(score)
+                displayNextQuestion()
+            }
+        })
+    };
+};
 
-//adding the event listener, this will run the functions that will score each question depending on the clicked button  
-usuallyBtn.addEventListener('click', usuallyBtnClick);
-usuallyBtn.addEventListener('click', displayNextQuestion);
-//
-sometimesBtn.addEventListener('click', sometimesBtnClick);
-sometimesBtn.addEventListener('click', displayNextQuestion);
-//
-seldomBtn.addEventListener('click', seldomBtnClick);
-seldomBtn.addEventListener('click', displayNextQuestion);
-//
-rarelyBtn.addEventListener('click', rarelyBtnClick);
-rarelyBtn.addEventListener('click', displayNextQuestion);
-//
+function getTotals(num){
+    let total = 0
+    for (let x = num; x < questionsScores.length; x += 7){
+        total += questionsScores[x]
+    }   
+    return ((total/50) * 100).toFixed(0);
+};
 
-displayNextQuestion() //create a btn for this
+function displayResults(){
+    document.querySelector('#results-title').innerHTML = 'Your results based from your scores:';
+    document.querySelector('.questions').style.display = 'none';
+    document.querySelector('.results').style.display = 'block';
+    const results = document.querySelectorAll('.score');
+    for (let res in results){
+        res = parseInt(res)
+        let result = results[res]
+        result.innerHTML = result.getAttribute('class').toString() + ' | ' + getTotals(res) + ' %';
+    };
+};
+
+window.addEventListener('DOMContentLoaded', displayNextQuestion);
+window.addEventListener('DOMContentLoaded', getScores);

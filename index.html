@@ -4,49 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Inter-personal relationships</title>
+    <title>Inter-personal spirituality</title>
 </head>
 <body>
-    <div class="main">
-        <div class="box box-1" id="box-1">
-            <h1>Hi there,</h1>
-            <p>You can test yourself by completing the following questionaire to establish your motivational gift.</p>
-            <input type="text" name="" id="username" class="btn-1" placeholder="Username">
-            <button id="continue-btn">Continue</button>
-        </div>
-        <div class="box box-2" id="box-2" style="display: none;">
-            <p>
-                Read through the list of questions and click the answer which is most appropiate to you.
-                Either Usually, Sometimes, Seldom or Rarely.
-                Do not ponder at length over any question.
-                Be as realistic as you can, answering as you are at this stage in your life, not what you would like to be.
-                Remember the accuracy of the results is dependent on your honesty.
-            </p>
-            <button id="begin-btn">Begin Questionaire</button>
-        </div>
-        <div class="box box-3" id="questionaire" style="display: none;">
-            <p id="display-question">#</p>
-            <div class="choice-btns" id="choice-btns">
-                <button id="usually-btn">Usually</button>
-                <button id="sometimes-btn">Sometimes</button>
-                <button id="seldom-btn">Seldom</button>
-                <button id="rarely-btn">Rarely</button>
+    <div class="container">
+        <div class="questions">
+            <div class="question">
+                <p id="question-num"></p>
+                <p id="question"></p>
             </div>
-        </div> 
-        <div class="box box-4" id="results" style="display: none;"> 
-            <h4>Your results based from your scores: </h4>
-            <p id="mercy-results"></p>
-            <p id="teaching-results"></p>
-            <p id="prophecy-results"></p>
-            <p id="giving-results"></p>
-            <p id="exhorting-results"></p>
-            <p id="serving-results"></p>
-            <p id="leading-results"></p>
+            <div class="btns">
+                <button score='5'>Usually</button>
+                <button score='3'>Sometimes</button> 
+                <button score='1'>Seldom</button>
+                <button score='0'>Rarely</button> 
+            </div>
+        </div>
+        <div class="results"> 
+            <p id="results-title"></p>
+            <p class="mercy score"></p>
+            <p class="teaching score"></p>
+            <p class="prophecy score"></p>
+            <p class="giving score"></p>
+            <p class="exhorting score"></p>
+            <p class="serving score"></p>
+            <p class="leading score"></p>
         </div>
     </div>
-
     <script src="app.js"></script>
-    <script src="app2.js"></script>
-    <!--Thembalakhe Malindi-->
 </body>
 </html>
